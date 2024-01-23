@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 async function addUser() {
-    await mongoose.connect("mongodb+srv://weifan:info441@info441.wfotfpj.mongodb.net/user");
+    await mongoose.connect("YOUR_MONGODB_URL");
     const userSchema = new mongoose.Schema({
         firstname: String,
         lastname: String,
