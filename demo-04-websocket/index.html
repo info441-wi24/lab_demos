@@ -12,7 +12,13 @@
 
         function sendMessage() {
             let val = document.getElementById("textInput").value
-            webSocket.send(val);
+            webSocket.send(JSON.stringify({"message": val, "action": "sendMessage"}));
+        }
+
+        function updateName() {
+            let name = document.getElementById("name").value;
+            webSocket.send(JSON.stringify({"name": name, "action": "updateName"}));
+
         }
 
     </script>
@@ -21,6 +27,10 @@
 <body>
     <h1>Web sockets demo!</h1>
 
+    <p>Name: </p>
+    <input type="text" id="name">
+    <button id="sendBtn" onclick="updateName()">Update Name</button>
+    <p>Message: </p>
     <input type=text id="textInput">
     <button id="sendBtn" onclick="sendMessage()">send</button>
 

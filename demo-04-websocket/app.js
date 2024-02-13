@@ -26,10 +26,20 @@ app.ws('/socket', function(ws, req) {
     userIndex++;
 
     ws.on('message', function(msg) {
+        const message = JSON.parse(msg);  
         try{
+          if (message["action"] == "updateName") {
+            allWebSockets[myIndex].name = message.name;
+            console.log(allWebSockets[myIndex].name);
+          } else if (message["action"] == "sendMessage") {
+            const name = allWebSockets[myIndex].name;
+            const currentMessage = message.message;
             for (const [socketNum, socketInfo] of Object.entries(allWebSockets)) {
-              socketInfo.socket.send(myIndex + ": " + msg);
+              socketInfo.socket.send(name + ": " + currentMessage);
             }
+          } else {
+            throw new Error("no such an action");
+          }
           
         }catch(error) {
           console.error("Websocket message recieve error: " + error);
